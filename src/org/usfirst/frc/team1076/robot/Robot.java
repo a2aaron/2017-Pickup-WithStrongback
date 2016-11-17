@@ -1,13 +1,15 @@
 
 package org.usfirst.frc.team1076.robot;
 
+import org.usfirst.frc.team1076.robot.commands.ExampleCommand;
+import org.usfirst.frc.team1076.robot.subsystems.Drivetrain;
+import org.usfirst.frc.team1076.robot.subsystems.ExampleSubsystem;
+
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
-import org.usfirst.frc.team1076.robot.commands.ExampleCommand;
-import org.usfirst.frc.team1076.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team1076.robot.subsystems.ExampleSubsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -25,7 +27,7 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
     Command autonomousCommand;
     SendableChooser chooser;
-
+    CANTalon talon;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -34,9 +36,11 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
+        talon  = new CANTalon(1);
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+        SmartDashboard.putData("plz", drivetrain);
     }
 	
 	/**
@@ -84,6 +88,8 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
+        
+       ;
     }
 
     public void teleopInit() {
@@ -92,13 +98,16 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
+        System.out.println("Teleop enabled");
     }
 
     /**
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
+//    	System.out.println("I LIVE!");
         Scheduler.getInstance().run();
+        talon.set(oi.getLeftX());
     }
     
     /**
