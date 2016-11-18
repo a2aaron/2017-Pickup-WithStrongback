@@ -27,7 +27,6 @@ public class Robot extends IterativeRobot {
 	public static Drivetrain drivetrain;
     Command autonomousCommand;
     SendableChooser chooser;
-    CANTalon talon;
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -36,7 +35,6 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		drivetrain = new Drivetrain();
         chooser = new SendableChooser();
-        talon  = new CANTalon(1);
         chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
@@ -88,8 +86,6 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
         Scheduler.getInstance().run();
-        
-       ;
     }
 
     public void teleopInit() {
@@ -105,9 +101,7 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during operator control
      */
     public void teleopPeriodic() {
-//    	System.out.println("I LIVE!");
         Scheduler.getInstance().run();
-        talon.set(oi.getLeftX());
     }
     
     /**

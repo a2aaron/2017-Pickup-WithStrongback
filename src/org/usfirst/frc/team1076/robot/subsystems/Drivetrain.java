@@ -1,18 +1,31 @@
 package org.usfirst.frc.team1076.robot.subsystems;
 
+import org.usfirst.frc.team1076.robot.RobotMap;
+import org.usfirst.frc.team1076.robot.commands.DriveWithJoysticks;
+
+import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 /**
  *
  */
 public class Drivetrain extends Subsystem {
-    
+    CANTalon leftMotor;
+    CANTalon rightMotor;
+    CANTalon topMotor;
+    CANTalon bottomMotor;
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+	public Drivetrain() {
+		leftMotor = new CANTalon(RobotMap.leftMotor);
+		rightMotor = new CANTalon(RobotMap.rightMotor);
+		topMotor = new CANTalon(RobotMap.topMotor);
+		bottomMotor = new CANTalon(RobotMap.bottomMotor);
+	}
+	
     public void initDefaultCommand() {
-        // Set the default command for a subsystem here.
-        //setDefaultCommand(new MySpecialCommand());
+    	// This subsystem will run DriveWithJoysticks unless another command interrupts it
+        setDefaultCommand(new DriveWithJoysticks());
     }
     /**
      * Strafe the robot at a particular speed
@@ -20,7 +33,10 @@ public class Drivetrain extends Subsystem {
      * @param ySpeed    double between -1 and 1
      */
     public void strafe(double xSpeed, double ySpeed) {
-        System.out.println("TODO! xSpeed: " + xSpeed + " ySpeed: " + ySpeed);
+        leftMotor.set(xSpeed);
+        rightMotor.set(xSpeed);
+        topMotor.set(ySpeed);
+        bottomMotor.set(ySpeed);
     }
     
     /**
@@ -30,7 +46,7 @@ public class Drivetrain extends Subsystem {
      * 
      */
     public void rotate(double speed) {
-        System.out.println("TODO! rotation: " + speed);
+        leftMotor.set(speed);
+        rightMotor.set(-speed);
     }
 }
-
