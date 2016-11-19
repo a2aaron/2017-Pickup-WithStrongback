@@ -2,13 +2,13 @@
 package org.usfirst.frc.team1076.robot;
 
 import org.strongback.Strongback;
+import org.strongback.command.Command;
 import org.strongback.components.Motor;
 import org.strongback.components.ui.Gamepad;
 import org.strongback.hardware.Hardware;
 import org.usfirst.frc.team1076.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
-import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
@@ -85,7 +85,7 @@ public class Robot extends IterativeRobot {
 		} */
     	
     	// schedule the autonomous command (example)
-        if (autonomousCommand != null) autonomousCommand.start();
+        if (autonomousCommand != null) autonomousCommand.initialize();
     }
 
     /**
