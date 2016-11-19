@@ -1,11 +1,12 @@
 
 package org.usfirst.frc.team1076.robot;
 
-import org.usfirst.frc.team1076.robot.commands.ExampleCommand;
+import org.strongback.Strongback;
+import org.strongback.components.Motor;
+import org.strongback.components.ui.Gamepad;
+import org.strongback.hardware.Hardware;
 import org.usfirst.frc.team1076.robot.subsystems.Drivetrain;
-import org.usfirst.frc.team1076.robot.subsystems.ExampleSubsystem;
 
-import edu.wpi.first.wpilibj.CANTalon;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -22,9 +23,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  */
 public class Robot extends IterativeRobot {
 
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static OI oi;
-	public static Drivetrain drivetrain;
+	TeleopController teleopController;
+	Gamepad gamepad;
+	Drivetrain drivetrain;
     Command autonomousCommand;
     SendableChooser chooser;
     /**
@@ -32,13 +33,19 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
     public void robotInit() {
-		oi = new OI();
-		drivetrain = new Drivetrain();
+        Motor leftMotor = Hardware.Motors.talon(RobotMap.leftMotorIndex);
+        Motor rightMotor = Hardware.Motors.talon(RobotMap.rightMotorIndex);
+        Motor topMotor = Hardware.Motors.talon(RobotMap.topMotorIndex);
+        Motor bottomMotor = Hardware.Motors.talon(RobotMap.bottomMotorIndex);
+        
+        
+        
+        gamepad = Hardware.HumanInterfaceDevices.logitechF310(0);
+		teleopController = new TeleopController(gamepad);
+		drivetrain = new Drivetrain(leftMotor, rightMotor, topMotor, bottomMotor);
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
-        SmartDashboard.putData("plz", drivetrain);
     }
 	
 	/**
@@ -47,7 +54,7 @@ public class Robot extends IterativeRobot {
 	 * the robot is disabled.
      */
     public void disabledInit(){
-
+        Strongback.disable();
     }
 	
 	public void disabledPeriodic() {
@@ -85,6 +92,8 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+        drivetrain.strafe(teleopController.getLeftX().read(), teleopController.getLeftX().read());
+        drivetrain.rotate(teleopController.getRightX().read());
         Scheduler.getInstance().run();
     }
 
@@ -95,6 +104,7 @@ public class Robot extends IterativeRobot {
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
         System.out.println("Teleop enabled");
+        Strongback.start();
     }
 
     /**
