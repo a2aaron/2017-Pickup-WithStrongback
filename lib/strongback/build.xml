@@ -7,22 +7,22 @@
     <property name="test.report.dir" value="${test.output.dir}/classes" />
     <property name="test.target.dir" value="${test.output.dir}/classes" />
     <property file="${lib}/wpilib/wpilib.properties" />
-    <property file="${lib}/wpilib/java/${version}/ant/build.properties" />
-    <property file="${lib}/strongback/java/ant/build.properties" />
-
-    <import file="../../lib/wpilib/java/current/ant/build.xml" />
+    <property file="${lib}/wpilib/ant/build.properties" />
+    <property file="${lib}/strongback/build.properties" />
+	
+    <import file="../../lib/wpilib/ant/build.xml" />
 	
     <!-- Define the classpaths -->
     <path id="compile.classpath">
-        <fileset dir="${strongback.home}/java/lib" includes="**/*.jar" excludes="**/*-sources.jar" />
-        <fileset dir="${lib}/wpilib/java/${version}/lib" includes="**/*.jar" excludes="**/*-sources.jar" />
+        <fileset dir="${strongback.home}/java" includes="**/*.jar" excludes="**/*-sources.jar" />
+        <fileset dir="${lib}/wpilib/lib" includes="**/*.jar" excludes="**/*-sources.jar" />
         <pathelement path="${classpath}" />
     </path>
 
     <!-- Define a classpath for unit testing -->
     <path id="junit.classpath">
-        <fileset dir="${strongback.home}/java/lib" includes="**/*.jar" excludes="**/*-sources.jar" />
-        <fileset dir="${strongback.home}/java/lib-tests" includes="**/*.jar" excludes="**/*-sources.jar" />
+        <fileset dir="${strongback.home}/java" includes="**/*.jar" excludes="**/*-sources.jar" />
+        <fileset dir="${lib}/" includes="**/*.jar" excludes="**/*-sources.jar" />
         <pathelement location="${build.dir}" />
         <pathelement path="${classpath}" />
     </path>

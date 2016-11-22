@@ -2,7 +2,7 @@
 
 <project name="athena-project-build" default="deploy">
 
-  <property file="${lib}/wpilib/java/current/ant/build.properties" />
+  <property file="${lib}/wpilib/ant/build.properties" />
 
 
   <!-- Load Tasks -->
