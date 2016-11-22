@@ -7,21 +7,21 @@
     <property name="test.report.dir" value="${test.output.dir}/classes" />
     <property name="test.target.dir" value="${test.output.dir}/classes" />
     <property file="${lib}/wpilib/wpilib.properties" />
-    <property file="${lib}/wpilib/ant/build.properties" />
+    <property file="${lib}/wpilib/build.properties" />
     <property file="${lib}/strongback/build.properties" />
 	
-    <import file="../../lib/wpilib/ant/build.xml" />
+    <import file="../../lib/wpilib/build.xml" />
 	
     <!-- Define the classpaths -->
     <path id="compile.classpath">
-        <fileset dir="${strongback.home}/java" includes="**/*.jar" excludes="**/*-sources.jar" />
+        <fileset dir="${strongback.lib}" includes="**/*.jar" excludes="**/*-sources.jar" />
         <fileset dir="${lib}/wpilib/lib" includes="**/*.jar" excludes="**/*-sources.jar" />
         <pathelement path="${classpath}" />
     </path>
 
     <!-- Define a classpath for unit testing -->
     <path id="junit.classpath">
-        <fileset dir="${strongback.home}/java" includes="**/*.jar" excludes="**/*-sources.jar" />
+        <fileset dir="${strongback.lib}" includes="**/*.jar" excludes="**/*-sources.jar" />
         <fileset dir="${lib}/" includes="**/*.jar" excludes="**/*-sources.jar" />
         <pathelement location="${build.dir}" />
         <pathelement path="${classpath}" />
@@ -34,7 +34,7 @@
 	    
     <!-- Deletes the directories used by the tests-->
     <target name="clean" depends="clean-tests" description="Clean up all generated files">
-        <ant antfile="${wpilib.ant.dir}/build.xml" target="clean" />
+        <ant antfile="${wpilib}/build.xml" target="clean" />
     </target>
 
     <target name="compile" description="Compile the source code.">
