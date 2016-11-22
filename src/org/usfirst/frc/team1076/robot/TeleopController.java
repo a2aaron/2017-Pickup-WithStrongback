@@ -1,31 +1,29 @@
 package org.usfirst.frc.team1076.robot;
 
-import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.buttons.Button;
-import org.usfirst.frc.team1076.robot.commands.ExampleCommand;
+import org.strongback.components.ui.ContinuousRange;
+import org.strongback.components.ui.Gamepad;
 
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
-public class OI {
+public class TeleopController {
+    Gamepad gamepad;
     
-    Joystick stick = new Joystick(0);
-    
-    public OI() {
-        
+    public TeleopController(Gamepad gamepad) {
+        this.gamepad = gamepad;
     }
     
-    public double getLeftY() {
-        return stick.getRawAxis(0);
+    public ContinuousRange getLeftY() {
+        return gamepad.getAxis(0);
     }
     
-    public double getLeftX() {
-        return stick.getRawAxis(1);
+    public ContinuousRange getLeftX() {
+        return gamepad.getAxis(1);
     }
     
-    public double getRightX() {
-        return stick.getRawAxis(4);
+    public ContinuousRange getRightX() {
+        return gamepad.getAxis(4);
     }
     
     
